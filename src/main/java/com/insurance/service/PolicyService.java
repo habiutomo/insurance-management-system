@@ -14,6 +14,7 @@ import com.insurance.entity.Customer;
 import com.insurance.entity.InsurancePolicy;
 import com.insurance.enums.PolicyStatus;
 import com.insurance.enums.PolicyType;
+import com.insurance.enums.UnderwritingStatus;
 import com.insurance.exception.BadRequestException;
 import com.insurance.exception.ResourceNotFoundException;
 import com.insurance.repository.PolicyRepository;
@@ -54,6 +55,17 @@ public class PolicyService {
         policy.setEndDate(request.getEndDate());
         policy.setCustomer(customer);
         policy.setStatus(PolicyStatus.ACTIVE);
+        policy.setInsuredName(request.getInsuredName());
+        policy.setBeneficiaryName(request.getBeneficiaryName());
+        policy.setBeneficiaryRelationship(request.getBeneficiaryRelationship());
+        policy.setBankAccountNumber(request.getBankAccountNumber());
+        policy.setBankAccountName(request.getBankAccountName());
+        policy.setBankName(request.getBankName());
+        policy.setPremiumPaymentMethod(request.getPremiumPaymentMethod());
+        policy.setPremiumFrequency(request.getPremiumFrequency());
+        policy.setAutoRenew(request.getAutoRenew() != null && request.getAutoRenew());
+        policy.setBranchOffice(request.getBranchOffice());
+        policy.setUnderwritingStatus(UnderwritingStatus.APPROVED);
         return policyRepository.save(policy);
     }
 
@@ -71,6 +83,16 @@ public class PolicyService {
         policy.setStartDate(request.getStartDate());
         policy.setEndDate(request.getEndDate());
         policy.setCustomer(customer);
+        policy.setInsuredName(request.getInsuredName());
+        policy.setBeneficiaryName(request.getBeneficiaryName());
+        policy.setBeneficiaryRelationship(request.getBeneficiaryRelationship());
+        policy.setBankAccountNumber(request.getBankAccountNumber());
+        policy.setBankAccountName(request.getBankAccountName());
+        policy.setBankName(request.getBankName());
+        policy.setPremiumPaymentMethod(request.getPremiumPaymentMethod());
+        policy.setPremiumFrequency(request.getPremiumFrequency());
+        policy.setAutoRenew(request.getAutoRenew() != null && request.getAutoRenew());
+        policy.setBranchOffice(request.getBranchOffice());
         return policyRepository.save(policy);
     }
 
@@ -82,6 +104,12 @@ public class PolicyService {
     public InsurancePolicy updatePolicyStatus(Long id, PolicyStatus status) {
         InsurancePolicy policy = getPolicyById(id);
         policy.setStatus(status);
+        return policyRepository.save(policy);
+    }
+
+    public InsurancePolicy updateUnderwritingStatus(Long id, UnderwritingStatus status) {
+        InsurancePolicy policy = getPolicyById(id);
+        policy.setUnderwritingStatus(status);
         return policyRepository.save(policy);
     }
 
@@ -109,6 +137,17 @@ public class PolicyService {
         renewed.setEndDate(request.getEndDate());
         renewed.setCustomer(policy.getCustomer());
         renewed.setStatus(PolicyStatus.ACTIVE);
+        renewed.setInsuredName(policy.getInsuredName());
+        renewed.setBeneficiaryName(policy.getBeneficiaryName());
+        renewed.setBeneficiaryRelationship(policy.getBeneficiaryRelationship());
+        renewed.setBankAccountNumber(request.getBankAccountNumber() != null ? request.getBankAccountNumber() : policy.getBankAccountNumber());
+        renewed.setBankAccountName(request.getBankAccountName() != null ? request.getBankAccountName() : policy.getBankAccountName());
+        renewed.setBankName(request.getBankName() != null ? request.getBankName() : policy.getBankName());
+        renewed.setPremiumPaymentMethod(policy.getPremiumPaymentMethod());
+        renewed.setPremiumFrequency(policy.getPremiumFrequency());
+        renewed.setAutoRenew(request.getAutoRenew() != null ? request.getAutoRenew() : policy.isAutoRenew());
+        renewed.setBranchOffice(policy.getBranchOffice());
+        renewed.setUnderwritingStatus(UnderwritingStatus.APPROVED);
         return policyRepository.save(renewed);
     }
 

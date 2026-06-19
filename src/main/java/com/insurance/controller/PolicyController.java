@@ -20,6 +20,7 @@ import com.insurance.dto.PolicyRequest;
 import com.insurance.entity.InsurancePolicy;
 import com.insurance.enums.PolicyStatus;
 import com.insurance.enums.PolicyType;
+import com.insurance.enums.UnderwritingStatus;
 import com.insurance.service.PolicyService;
 
 import jakarta.validation.Valid;
@@ -86,6 +87,13 @@ public class PolicyController {
     public ResponseEntity<ApiResponse<List<InsurancePolicy>>> getPoliciesByType(
             @PathVariable PolicyType type) {
         return ResponseEntity.ok(ApiResponse.ok(policyService.getPoliciesByType(type)));
+    }
+
+    @PatchMapping("/{id}/underwriting")
+    public ResponseEntity<ApiResponse<InsurancePolicy>> updateUnderwritingStatus(
+            @PathVariable Long id, @RequestParam UnderwritingStatus status) {
+        InsurancePolicy policy = policyService.updateUnderwritingStatus(id, status);
+        return ResponseEntity.ok(ApiResponse.ok("Underwriting status updated", policy));
     }
 
     @DeleteMapping("/{id}")

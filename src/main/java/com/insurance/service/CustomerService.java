@@ -32,6 +32,9 @@ public class CustomerService {
         if (customerRepository.existsByEmail(request.getEmail())) {
             throw new BadRequestException("Email already exists");
         }
+        if (request.getNik() != null && customerRepository.existsByNik(request.getNik())) {
+            throw new BadRequestException("NIK already exists");
+        }
 
         Customer customer = new Customer();
         customer.setFullName(request.getFullName());
@@ -39,7 +42,15 @@ public class CustomerService {
         customer.setPhone(request.getPhone());
         customer.setAddress(request.getAddress());
         customer.setDateOfBirth(request.getDateOfBirth());
-        customer.setIdCardNumber(request.getIdCardNumber());
+        customer.setPlaceOfBirth(request.getPlaceOfBirth());
+        customer.setGender(request.getGender());
+        customer.setReligion(request.getReligion());
+        customer.setNik(request.getNik());
+        customer.setNpwp(request.getNpwp());
+        customer.setOccupation(request.getOccupation());
+        customer.setMaritalStatus(request.getMaritalStatus());
+        customer.setMotherMaidenName(request.getMotherMaidenName());
+        customer.setNationality(request.getNationality());
         return customerRepository.save(customer);
     }
 
@@ -56,7 +67,15 @@ public class CustomerService {
         customer.setPhone(request.getPhone());
         customer.setAddress(request.getAddress());
         customer.setDateOfBirth(request.getDateOfBirth());
-        customer.setIdCardNumber(request.getIdCardNumber());
+        customer.setPlaceOfBirth(request.getPlaceOfBirth());
+        customer.setGender(request.getGender());
+        customer.setReligion(request.getReligion());
+        customer.setNik(request.getNik());
+        customer.setNpwp(request.getNpwp());
+        customer.setOccupation(request.getOccupation());
+        customer.setMaritalStatus(request.getMaritalStatus());
+        customer.setMotherMaidenName(request.getMotherMaidenName());
+        customer.setNationality(request.getNationality());
         return customerRepository.save(customer);
     }
 

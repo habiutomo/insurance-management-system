@@ -6,10 +6,14 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.insurance.enums.ClaimStatus;
+import com.insurance.enums.CommissionStatus;
 import com.insurance.enums.PaymentStatus;
 import com.insurance.enums.PolicyStatus;
 import com.insurance.enums.PolicyType;
+import com.insurance.enums.UnderwritingStatus;
+import com.insurance.repository.AgentRepository;
 import com.insurance.repository.ClaimRepository;
+import com.insurance.repository.CommissionRepository;
 import com.insurance.repository.CustomerRepository;
 import com.insurance.repository.PaymentRepository;
 import com.insurance.repository.PolicyRepository;
@@ -21,22 +25,31 @@ public class DashboardService {
     private final PolicyRepository policyRepository;
     private final ClaimRepository claimRepository;
     private final PaymentRepository paymentRepository;
+    private final AgentRepository agentRepository;
+    private final CommissionRepository commissionRepository;
 
     public DashboardService(CustomerRepository customerRepository,
                             PolicyRepository policyRepository,
                             ClaimRepository claimRepository,
-                            PaymentRepository paymentRepository) {
+                            PaymentRepository paymentRepository,
+                            AgentRepository agentRepository,
+                            CommissionRepository commissionRepository) {
         this.customerRepository = customerRepository;
         this.policyRepository = policyRepository;
         this.claimRepository = claimRepository;
         this.paymentRepository = paymentRepository;
+        this.agentRepository = agentRepository;
+        this.commissionRepository = commissionRepository;
     }
 
     public Map<String, Object> getStats() {
         Map<String, Object> stats = new HashMap<>();
+
         stats.put("totalCustomers", customerRepository.count());
         stats.put("totalPolicies", policyRepository.count());
         stats.put("totalClaims", claimRepository.count());
+        stats.put("totalAgents", agentRepository.count());
+        stats.put("totalCommissions", commissionRepository.count());
 
         stats.put("activePolicies", policyRepository.countByStatus(PolicyStatus.ACTIVE));
         stats.put("expiredPolicies", policyRepository.countByStatus(PolicyStatus.EXPIRED));
@@ -58,6 +71,13 @@ public class DashboardService {
         stats.put("paidPayments", paymentRepository.countByStatus(PaymentStatus.PAID));
         stats.put("pendingPayments", paymentRepository.countByStatus(PaymentStatus.PENDING));
         stats.put("overduePayments", paymentRepository.countByStatus(PaymentStatus.OVERDUE));
+
+        stats.put("pendingCommissions", commissionRepository.countByStatus(CommissionStatus.PENDING));
+        stats.put("paidCommissions", commissionRepository.countByStatus(CommissionStatus.PAID));
+
+        stats.put("pendingUnderwriting", policyRepository.countByUnderwritingStatus(UnderwritingStatus.PENDING));
+        stats.put("approvedUnderwriting", policyRepository.countByUnderwritingStatus(UnderwritingStatus.APPROVED));
+        stats.put("declinedUnderwriting", policyRepository.countByUnderwritingStatus(UnderwritingStatus.DECLINED));
 
         return stats;
     }

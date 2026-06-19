@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 
 import com.insurance.enums.PolicyStatus;
 import com.insurance.enums.PolicyType;
+import com.insurance.enums.PremiumFrequency;
+import com.insurance.enums.PremiumPaymentMethod;
+import com.insurance.enums.UnderwritingStatus;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -59,6 +62,31 @@ public class InsurancePolicy {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
+    private String insuredName;
+
+    private String beneficiaryName;
+
+    private String beneficiaryRelationship;
+
+    private String bankAccountNumber;
+
+    private String bankAccountName;
+
+    private String bankName;
+
+    @Enumerated(EnumType.STRING)
+    private PremiumPaymentMethod premiumPaymentMethod;
+
+    @Enumerated(EnumType.STRING)
+    private PremiumFrequency premiumFrequency;
+
+    @Enumerated(EnumType.STRING)
+    private UnderwritingStatus underwritingStatus = UnderwritingStatus.PENDING;
+
+    private boolean autoRenew;
+
+    private String branchOffice;
+
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
@@ -95,6 +123,28 @@ public class InsurancePolicy {
     public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
     public Customer getCustomer() { return customer; }
     public void setCustomer(Customer customer) { this.customer = customer; }
+    public String getInsuredName() { return insuredName; }
+    public void setInsuredName(String insuredName) { this.insuredName = insuredName; }
+    public String getBeneficiaryName() { return beneficiaryName; }
+    public void setBeneficiaryName(String beneficiaryName) { this.beneficiaryName = beneficiaryName; }
+    public String getBeneficiaryRelationship() { return beneficiaryRelationship; }
+    public void setBeneficiaryRelationship(String beneficiaryRelationship) { this.beneficiaryRelationship = beneficiaryRelationship; }
+    public String getBankAccountNumber() { return bankAccountNumber; }
+    public void setBankAccountNumber(String bankAccountNumber) { this.bankAccountNumber = bankAccountNumber; }
+    public String getBankAccountName() { return bankAccountName; }
+    public void setBankAccountName(String bankAccountName) { this.bankAccountName = bankAccountName; }
+    public String getBankName() { return bankName; }
+    public void setBankName(String bankName) { this.bankName = bankName; }
+    public PremiumPaymentMethod getPremiumPaymentMethod() { return premiumPaymentMethod; }
+    public void setPremiumPaymentMethod(PremiumPaymentMethod premiumPaymentMethod) { this.premiumPaymentMethod = premiumPaymentMethod; }
+    public PremiumFrequency getPremiumFrequency() { return premiumFrequency; }
+    public void setPremiumFrequency(PremiumFrequency premiumFrequency) { this.premiumFrequency = premiumFrequency; }
+    public UnderwritingStatus getUnderwritingStatus() { return underwritingStatus; }
+    public void setUnderwritingStatus(UnderwritingStatus underwritingStatus) { this.underwritingStatus = underwritingStatus; }
+    public boolean isAutoRenew() { return autoRenew; }
+    public void setAutoRenew(boolean autoRenew) { this.autoRenew = autoRenew; }
+    public String getBranchOffice() { return branchOffice; }
+    public void setBranchOffice(String branchOffice) { this.branchOffice = branchOffice; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
 }
