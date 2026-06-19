@@ -38,7 +38,6 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/dashboard/**").hasAnyRole("ADMIN", "AGENT")
                 .requestMatchers("/api/users/**").hasRole("ADMIN")
                 .requestMatchers("/api/profile/**").authenticated()
@@ -48,9 +47,9 @@ public class SecurityConfig {
                 .requestMatchers("/api/payments/**").hasAnyRole("ADMIN", "AGENT")
                 .requestMatchers("/api/agents/**").hasAnyRole("ADMIN", "AGENT")
                 .requestMatchers("/api/commissions/**").hasAnyRole("ADMIN", "AGENT")
+                .requestMatchers("/", "/index.html", "/css/**", "/js/**", "/favicon.ico").permitAll()
                 .anyRequest().authenticated()
             )
-            .headers(headers -> headers.frameOptions(frame -> frame.disable()))
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
