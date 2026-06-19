@@ -1,4 +1,6 @@
-# Insurance Management System — Bank Danamon
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/cc7f0b9a-4ddf-4f84-9172-525e252a6455" />
+
+# Insurance Management System â€” Bank Danamon
 
 Sistem manajemen asuransi `bancassurance` untuk perbankan yang dibangun dengan Spring Boot 3.2, JWT, dan MySQL.
 
